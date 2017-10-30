@@ -35,10 +35,26 @@ public class ControlJuego {
 	 * 			El resto de posiciones que no son minas guardan en el entero cuántas minas hay alrededor de la celda
 	 */
 	public void inicializarPartida(){
-
-		
+		for (int i = 0; i < MINAS_INICIALES; i++) {
+			meteMinas();
+		}
+		depurarTablero();
 	}
 	
+	public void meteMinas() {
+		Random rd=new Random();
+		int aleC, aleF;
+		do {
+			aleC=rd.nextInt(10);
+			aleF=rd.nextInt(10);
+		} while (tablero[aleC][aleF]==-1);
+		
+		tablero[aleC][aleF]=-1;
+			
+		}
+	
+
+
 	/**Cálculo de las minas adjuntas:
 	 * Para calcular el número de minas tenemos que tener en cuenta que no nos salimos nunca del tablero.
 	 * Por lo tanto, como mucho la i y la j valdrán LADO_TABLERO-1.
@@ -48,7 +64,7 @@ public class ControlJuego {
 	 * @return : El número de minas que hay alrededor de la casilla [i][j]
 	 **/
 	private int calculoMinasAdjuntas(int i, int j){
-
+		return j;
 	}
 	
 	/**
@@ -59,6 +75,7 @@ public class ControlJuego {
 	 * @return : Verdadero si no ha explotado una mina. Falso en caso contrario.
 	 */
 	public boolean abrirCasilla(int i, int j){
+		return false;
 
 	}
 	
@@ -69,6 +86,7 @@ public class ControlJuego {
 	 * @return Devuelve verdadero si se han abierto todas las celdas que no son minas.
 	 **/
 	public boolean esFinJuego(){
+		return false;
 	}
 	
 	
@@ -94,6 +112,7 @@ public class ControlJuego {
 	 * @return Un entero que representa el número de minas alrededor de la celda
 	 */
 	public int getMinasAlrededor(int i, int j) {
+		return j;
 	}
 
 	/**
@@ -101,6 +120,7 @@ public class ControlJuego {
 	 * @return Un entero con la puntuación actual
 	 */
 	public int getPuntuacion() {
+		return LADO_TABLERO;
 	}
 	
 }
