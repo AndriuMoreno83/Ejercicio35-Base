@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -140,6 +141,11 @@ public class VentanaPrincipal {
 	 */
 	public void inicializarListeners(){
 		//TODO
+		for (int i = 0; i < botonesJuego.length; i++) {
+			for (int j = 0; j < botonesJuego.length; j++) {
+				botonesJuego[i][j].addActionListener(new ActionBoton(this,i,j));
+			}
+		}
 	}
 	
 	
@@ -156,7 +162,14 @@ public class VentanaPrincipal {
 	 * @param j: posición horizontal de la celda.
 	 */
 	public void mostrarNumMinasAlrededor(int i , int j) {
-		//TODO
+		panelesJuego[i][j].removeAll();
+		JLabel numero=new JLabel(""+juego.getMinasAlrededor(i, j));
+		for (int k = 0; k < correspondenciaColores.length; k++) {
+			if (juego.getMinasAlrededor(i, j)==k) {
+				numero.setForeground(correspondenciaColores[k]);
+			}
+		}
+		panelesJuego[i][j].add(numero);
 	}
 	
 	
@@ -166,14 +179,24 @@ public class VentanaPrincipal {
 	 * @post : Todos los botones se desactivan excepto el de volver a iniciar el juego.
 	 */
 	public void mostrarFinJuego(boolean porExplosion) {
-		//TODO
+		if (porExplosion) {
+			JOptionPane.showMessageDialog(ventana, "TE HA EXPLOTADO UNA MINA", "HAS PERDIDO", 0);	
+			for (int i = 0; i < botonesJuego.length; i++) {
+				for (int j = 0; j < botonesJuego.length; j++) {
+					panelesJuego[i][j].disable();
+				}
+			}
+		}else {
+			JOptionPane.showMessageDialog(ventana, "FELICIDADES HAS GANADO", "HAS GANADO", 0);
+			System.exit(0);
+		}
 	}
 
 	/**
 	 * Método que muestra la puntuación por pantalla.
 	 */
 	public void actualizarPuntuacion() {
-		//TODO
+		pantallaPuntuacion.setText(""+juego.getPuntuacion());
 	}
 	
 	/**
