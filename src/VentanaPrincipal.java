@@ -23,7 +23,7 @@ public class VentanaPrincipal {
 	JPanel panelEmpezar;
 	JPanel panelPuntuacion;
 	JPanel panelJuego;
-	
+	VentanaPrincipal esta=this;
 	//Todos los botones se meten en un panel independiente.
 	//Hacemos esto para que podamos cambiar después los componentes por otros
 	JPanel [][] panelesJuego;
@@ -146,6 +146,28 @@ public class VentanaPrincipal {
 				botonesJuego[i][j].addActionListener(new ActionBoton(this,i,j));
 			}
 		}
+		botonEmpezar.addActionListener(new ActionListener() {		
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				juego=new ControlJuego();
+				for (int i = 0; i < panelesJuego.length; i++) {
+					for (int j = 0; j < panelesJuego.length; j++) {
+						panelesJuego[i][j].removeAll();	
+						botonesJuego[i][j]=new JButton("-");
+						panelesJuego[i][j].add(botonesJuego[i][j]);
+					}
+				}	
+				actualizarPuntuacion();
+				refrescarPantalla();
+				for (int i = 0; i < botonesJuego.length; i++) {
+					for (int j = 0; j < botonesJuego.length; j++) {
+						botonesJuego[i][j].addActionListener(new ActionBoton(esta,i,j));
+					}
+				}
+				
+			}
+		});
+		
 	}
 	
 	
@@ -163,10 +185,11 @@ public class VentanaPrincipal {
 	 */
 	public void mostrarNumMinasAlrededor(int i , int j) {
 		panelesJuego[i][j].removeAll();
-		JLabel numero=new JLabel(""+juego.getMinasAlrededor(i, j));
+		JLabel numero=new JLabel(""+juego.getMinasAlrededor(i, j), SwingConstants.CENTER);
 		for (int k = 0; k < correspondenciaColores.length; k++) {
 			if (juego.getMinasAlrededor(i, j)==k) {
 				numero.setForeground(correspondenciaColores[k]);
+				
 			}
 		}
 		panelesJuego[i][j].add(numero);
@@ -183,11 +206,11 @@ public class VentanaPrincipal {
 			JOptionPane.showMessageDialog(ventana, "TE HA EXPLOTADO UNA MINA", "HAS PERDIDO", 0);	
 			for (int i = 0; i < botonesJuego.length; i++) {
 				for (int j = 0; j < botonesJuego.length; j++) {
-					panelesJuego[i][j].disable();
+					botonesJuego[i][j].setEnabled(false);;
 				}
 			}
 		}else {
-			JOptionPane.showMessageDialog(ventana, "FELICIDADES HAS GANADO", "HAS GANADO", 0);
+			JOptionPane.showMessageDialog(ventana, "FELICIDADES HAS GANADO", "HAS GANADO", 1);
 			System.exit(0);
 		}
 	}

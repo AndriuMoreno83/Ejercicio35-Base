@@ -17,7 +17,7 @@ public class ControlJuego {
 	final int LADO_TABLERO = 10;
 
 	private int [][] tablero;
-	private int puntuacion;
+	private int puntuacion=0;
 	
 	
 	public ControlJuego() {
@@ -45,7 +45,6 @@ public class ControlJuego {
 				}
 			}
 		}
-		depurarTablero();
 	}
 	
 	public void meteMinas() {
